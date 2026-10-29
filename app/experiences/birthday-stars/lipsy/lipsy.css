@@ -1,0 +1,668 @@
+/* Every rule is scoped under .lipsy so this file can live inside any existing
+   Next.js project without touching its other pages. */
+
+body:has(.lipsy) {
+  margin: 0;
+  background: #0a0920;
+}
+
+.lipsy {
+  --ink: #0a0920;
+  --ink-2: #13113a;
+  --line: #2b2870;
+  --moon: #eeebff;
+  --mist: #a9a5d8;
+  --rose: #ff8aa1;
+  --gold: #ffd37a;
+  --plum: #3b1f63;
+  --plum-2: #2a1650;
+  --paper: #f3f0ff;
+  --paper-ink: #1b1744;
+  --font-display: var(--f-gloock), Georgia, 'Times New Roman', serif;
+  --font-body: var(--f-figtree), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--f-mono), ui-monospace, Menlo, Consolas, monospace;
+  --font-hand: var(--f-hand), 'Segoe Script', 'Bradley Hand', cursive;
+  color-scheme: dark;
+
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: var(--ink);
+  color: var(--moon);
+  font: 400 1.0625rem/1.65 var(--font-body);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+}
+.lipsy *,
+.lipsy *::before,
+.lipsy *::after {
+  box-sizing: border-box;
+}
+html:has(.lipsy) {
+  scroll-behavior: smooth;
+}
+
+.lipsy .sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  font-family: var(--font-display);
+}
+.lipsy .sky {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+.lipsy .fx {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 60;
+  pointer-events: none;
+  display: block;
+}
+.lipsy .main {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin-inline: auto;
+}
+.lipsy .mono {
+  font: 500 0.75rem/1.4 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin: 0;
+}
+.lipsy :focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* sound toggle */
+.lipsy .sound {
+  position: fixed;
+  z-index: 70;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: max(12px, env(safe-area-inset-right, 0px));
+  font: 500 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mist);
+  background: rgba(19, 17, 58, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.7em 1.1em;
+  cursor: pointer;
+}
+.lipsy .sound:hover {
+  color: var(--moon);
+}
+
+/* hero */
+.lipsy .hero {
+  padding-block: 64px 24px;
+  text-align: center;
+}
+.lipsy .stage {
+  position: relative;
+  height: clamp(240px, 44vw, 380px);
+  margin-top: 14px;
+}
+.lipsy .nameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: pan-y;
+  cursor: pointer;
+}
+.lipsy .lede {
+  font: 400 clamp(1.3rem, 3.6vw, 1.9rem) / 1.25 var(--font-display);
+  margin: 10px 0 0;
+  text-wrap: balance;
+}
+.lipsy .hint {
+  margin-top: 10px;
+}
+.lipsy .count {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 3.2vw, 30px);
+  margin-top: 36px;
+}
+.lipsy .cell {
+  min-width: 62px;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+.lipsy .num {
+  font: 400 clamp(2.1rem, 7vw, 3.4rem) / 1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--moon);
+}
+.lipsy .lab {
+  font: 500 0.68rem/1 var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.lipsy .until {
+  margin-top: 20px;
+}
+
+/* sections */
+.lipsy .sect {
+  padding-block: 88px 8px;
+}
+.lipsy .head {
+  max-width: 56ch;
+  display: grid;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.lipsy h2 {
+  font: 400 clamp(2rem, 5.4vw, 3.1rem) / 1.08 var(--font-display);
+  margin: 0;
+  text-wrap: balance;
+}
+.lipsy .head p {
+  margin: 0;
+}
+.lipsy .head .sub {
+  color: var(--mist);
+}
+
+/* star map */
+.lipsy .mapwrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 36px;
+  align-items: center;
+}
+.lipsy .map svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 450px;
+  margin-inline: auto;
+  overflow: visible;
+}
+.lipsy .panel {
+  border-left: 1px solid var(--line);
+  padding-left: 30px;
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+.lipsy .pips {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.lipsy .pip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--mist);
+  transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+.lipsy .pip.on {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(255, 211, 122, 0.7);
+}
+.lipsy .pips .mono {
+  margin-left: 8px;
+}
+.lipsy .starname {
+  min-height: 1.2em;
+}
+.lipsy .wish {
+  font: 400 clamp(1.45rem, 3.6vw, 1.95rem) / 1.28 var(--font-display);
+  margin: 0;
+  min-height: 6.4em;
+  text-wrap: pretty;
+}
+.lipsy .wish.in {
+  animation: lipsy-rise 0.7s ease both;
+}
+@keyframes lipsy-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.lipsy .facts {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.lipsy .facts div {
+  display: grid;
+  grid-template-columns: 7.5em minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+.lipsy .facts dt {
+  font: 500 0.72rem/1.4 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.lipsy .facts dd {
+  margin: 0;
+}
+.lipsy .toLetter {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  justify-self: start;
+}
+
+.lipsy .star {
+  cursor: pointer;
+  outline: none;
+}
+.lipsy .star .body {
+  transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+  transform-origin: 0 0;
+}
+.lipsy .star:hover .body {
+  transform: scale(1.2);
+}
+.lipsy .star .core {
+  fill: var(--mist);
+  opacity: 0.75;
+  transition: fill 0.4s;
+}
+.lipsy .star .halo {
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.lipsy .star .ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.lipsy .star:not(.lit) .core {
+  animation: lipsy-pulse 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.37s);
+}
+@keyframes lipsy-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.lipsy .star.lit .core {
+  fill: var(--gold);
+  opacity: 1;
+}
+.lipsy .star.heart .core {
+  fill: #e9b0c4;
+}
+.lipsy .star.heart.lit .core {
+  fill: var(--rose);
+}
+.lipsy .star.lit .halo {
+  opacity: 1;
+}
+.lipsy .star.active .ring {
+  opacity: 0.7;
+}
+.lipsy .star:focus-visible .ring {
+  opacity: 1;
+  stroke: var(--moon);
+}
+.lipsy .link {
+  stroke: var(--line);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 6;
+  transition: stroke 0.6s, stroke-dasharray 0.6s;
+}
+.lipsy .link.on {
+  stroke: var(--gold);
+  stroke-dasharray: none;
+  opacity: 0.8;
+}
+.lipsy .decor {
+  stroke: var(--line);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+  opacity: 0.8;
+}
+.lipsy .mapLabel {
+  font: 500 10px var(--font-mono);
+  letter-spacing: 0.2em;
+  fill: var(--mist);
+}
+
+/* candle */
+.lipsy .candle {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 40px;
+  align-items: center;
+}
+.lipsy .cake {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  cursor: pointer;
+  overflow: visible;
+}
+.lipsy .flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: lipsy-flick 1.6s ease-in-out infinite alternate;
+  transition: opacity 0.25s;
+}
+@keyframes lipsy-flick {
+  0% {
+    transform: scale(1, 1) rotate(-1.5deg);
+  }
+  35% {
+    transform: scale(0.95, 1.07) rotate(1deg);
+  }
+  70% {
+    transform: scale(1.04, 0.97) rotate(-0.6deg);
+  }
+  100% {
+    transform: scale(0.98, 1.04) rotate(1.6deg);
+  }
+}
+.lipsy .glow {
+  animation: lipsy-breathe 2.2s ease-in-out infinite alternate;
+  transition: opacity 0.3s;
+}
+@keyframes lipsy-breathe {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.lipsy .out .flame,
+.lipsy .out .glow {
+  opacity: 0;
+  animation: none;
+}
+.lipsy .smoke {
+  opacity: 0;
+}
+.lipsy .out .smoke {
+  animation: lipsy-smoke 2.6s ease-out forwards;
+}
+@keyframes lipsy-smoke {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}
+.lipsy .copy {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+.lipsy .copy p {
+  margin: 0;
+  color: var(--mist);
+  max-width: 44ch;
+}
+.lipsy .copy p.mono {
+  color: var(--mist);
+}
+.lipsy .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.lipsy .btn {
+  font: 600 0.95rem/1 var(--font-body);
+  padding: 0.95em 1.5em;
+  border-radius: 999px;
+  border: 1px solid var(--rose);
+  background: transparent;
+  color: var(--moon);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, color 0.2s;
+}
+.lipsy .btn:hover {
+  background: rgba(255, 138, 161, 0.14);
+}
+.lipsy .btn.primary {
+  background: var(--rose);
+  color: var(--ink);
+}
+.lipsy .btn.primary:hover {
+  background: #ffa3b5;
+}
+.lipsy .btn[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+.lipsy .made {
+  font: 400 1.7rem/1.2 var(--font-display);
+  color: var(--gold) !important;
+  margin: 0;
+  min-height: 1.3em;
+}
+
+/* letter */
+.lipsy .env-wrap {
+  display: grid;
+  place-items: center;
+  padding-block: 8px 0;
+}
+.lipsy .envelope {
+  position: relative;
+  width: min(360px, 100%);
+  aspect-ratio: 17 / 11;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  perspective: 900px;
+  display: block;
+}
+.lipsy .envelope .back {
+  position: absolute;
+  inset: 0;
+  background: #1d1a52;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.lipsy .envelope .front {
+  position: absolute;
+  inset: 0;
+  background: #262270;
+  clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%);
+  border-radius: 8px;
+  z-index: 1;
+}
+.lipsy .envelope .flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 54%;
+  background: #2f2a8c;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+  transition: transform 0.9s cubic-bezier(0.6, 0, 0.2, 1), opacity 0.9s;
+  z-index: 2;
+}
+.lipsy .envelope.open .flap {
+  transform: rotateX(115deg);
+  opacity: 0;
+}
+.lipsy .envelope .seal {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  border-radius: 50%;
+  background: var(--rose);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font: 500 1.25rem/1 var(--font-mono);
+  z-index: 3;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.lipsy .envelope.open .seal {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+.lipsy .envelope.locked .seal {
+  background: var(--ink-2);
+  color: var(--rose);
+  border: 1px solid var(--rose);
+}
+.lipsy .envelope.shake {
+  animation: lipsy-shake 0.45s;
+}
+@keyframes lipsy-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+.lipsy .lockNote {
+  text-align: center;
+  margin: 18px 0 0;
+  color: var(--mist);
+  min-height: 1.65em;
+}
+.lipsy .letter {
+  margin: 44px auto 0;
+  max-width: 560px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  padding: clamp(26px, 6vw, 48px);
+  border-radius: 3px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  transform: rotate(-0.5deg);
+  animation: lipsy-rise 0.9s ease both;
+}
+.lipsy .letter .hi {
+  font: 400 1.9rem/1.2 var(--font-display);
+  margin: 0 0 18px;
+}
+.lipsy .letter p {
+  font: 400 clamp(1.4rem, 3.8vw, 1.6rem) / 1.45 var(--font-hand);
+  margin: 0 0 14px;
+  animation: lipsy-rise 0.8s ease both;
+  animation-delay: calc(var(--i) * 0.5s + 0.3s);
+}
+.lipsy .letter .sign {
+  font: 600 clamp(1.6rem, 4.4vw, 1.9rem) / 1.2 var(--font-hand);
+  color: #b12e57;
+  margin: 22px 0 0;
+}
+.lipsy .reply {
+  margin-top: 26px;
+}
+.lipsy .reply .btn {
+  color: var(--paper-ink);
+  border-color: #b12e57;
+}
+.lipsy .reply .btn:hover {
+  background: rgba(177, 46, 87, 0.1);
+}
+
+.lipsy .foot {
+  padding-block: 96px 56px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .lipsy .hero {
+    padding-block: 72px 16px;
+  }
+  .lipsy .mapwrap,
+  .lipsy .candle {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .lipsy .panel {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 26px;
+  }
+  .lipsy .wish {
+    min-height: 7.2em;
+  }
+  .lipsy .facts div {
+    grid-template-columns: 6.5em minmax(0, 1fr);
+  }
+  .lipsy .copy {
+    justify-items: center;
+    text-align: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lipsy *,
+  .lipsy *::before,
+  .lipsy *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html:has(.lipsy) {
+    scroll-behavior: auto;
+  }
+}
