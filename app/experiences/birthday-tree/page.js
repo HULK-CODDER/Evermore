@@ -1610,7 +1610,7 @@ height = treeBounds.height;
                         </p>
 
 
-                        <h2>
+                        <h2 className="pt-12">
 
                             You make ordinary moments
 
