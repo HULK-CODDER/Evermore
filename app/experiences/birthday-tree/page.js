@@ -1610,7 +1610,7 @@ height = treeBounds.height;
                         </p>
 
 
-                        <h2 className="pt-12">
+                        <h2 className="pt-12 ">
 
                             You make ordinary moments
 
@@ -4362,7 +4362,12 @@ filter: drop-shadow(0 0 12px rgba(255,80,140,.9));
     margin-bottom: 30px;
   }
 }
-
+@media (max-width: 700px) {
+    .birthday-app h2 {
+      padding-top: 30px;
+      margin-top: 20px;
+    }
+  }
 `}</style>
     </main>
   );
