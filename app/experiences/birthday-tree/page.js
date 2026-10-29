@@ -4359,7 +4359,7 @@ filter: drop-shadow(0 0 12px rgba(255,80,140,.9));
   .secondary-button {
     position: relative;
     z-index: 10;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 }
 
